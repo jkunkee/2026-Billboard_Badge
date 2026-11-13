@@ -16,6 +16,9 @@ class GalleryApp(BaseApp):
         
         # Number of images
         self.maximage = 46
+
+        # Which images have been shown so far
+        self.shown_images = [False] * self.maximage
         
         # Time between image updates
         self.updatetime = 300
@@ -24,8 +27,19 @@ class GalleryApp(BaseApp):
         self.lastupdate = 0
     
     def random_art(self):
+        if all(self.shown_images):
+            self.shown_images = [False] * self.maximage
+
+        remaining = [
+            image_number
+            for image_number in range(1, self.maximage + 1)
+            if not self.shown_images[image_number - 1]
+        ]
+        image_number = random.choice(remaining)
+        self.shown_images[image_number - 1] = True
+
         display.clear()
-        display.draw_png(f'/data/gallery/' + "{:03d}".format(random.randint(1, self.maximage)) + '.png')
+        display.draw_png(f'/data/gallery/{image_number:03d}.png')
         display.update()
     
     def run(self):
