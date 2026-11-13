@@ -15,7 +15,7 @@ class GalleryApp(BaseApp):
         self.launched = False
         
         # Number of images
-        self.maximage = 44
+        self.maximage = 46
         
         # Time between image updates
         self.updatetime = 300
